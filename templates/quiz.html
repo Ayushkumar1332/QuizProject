@@ -1,0 +1,703 @@
+<!-- doctype html created by Ayush and shivam -->
+<html>
+  <head>
+    <title>Quiz Master</title>
+    <!-- CSS File Link -->
+   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+
+  <body>
+
+    <!-- ================= SPLASH SCREEN ================= -->
+    <div id="splashScreen" class="splash-screen">
+        <div class="quiz-3d">
+            <div class="cube">
+                <div class="face front">Q</div>
+                <div class="face back">?</div>
+                <div class="face right">A</div>
+                <div class="face left">Q</div>
+                <div class="face top">!</div>
+                <div class="face bottom">?</div>
+            </div>
+        </div>
+
+        <h1>Quiz Master</h1>
+        <p>Test Your Knowledge. Master Every Quiz.</p>
+
+        <div class="loading-bar">
+            <span></span>
+        </div>
+    </div>
+
+
+    <!-- ================= AUTH SCREEN ================= -->
+    <section id="authScreen" class="auth-screen hidden">
+
+        <div class="auth-card">
+
+            <div class="logo-small">
+                <span>QM</span>
+            </div>
+
+            <h1 id="authTitle">Welcome to Quiz Master</h1>
+            <p id="authSubtitle">Login to continue  quiz .</p>
+
+            <!-- LOGIN -->
+            <form id="loginForm">
+
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                </div>
+
+                <button class="primary-btn" type="submit">
+                    Login
+                </button>
+
+            </form>
+
+            <!-- SIGNUP -->
+            <form id="signupForm" class="hidden">
+
+                <div class="input-group">
+                    <label>Full Name</label>
+                    <input type="text" id="signupName" placeholder="Enter your name" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="email" id="signupEmail" placeholder="Enter your email" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="signupPassword" placeholder="Create a password" required>
+                </div>
+
+                <button class="primary-btn" type="submit">
+                    Create Account
+                </button>
+
+            </form>
+
+            <button id="googleLogin" class="google-btn">
+                Continue with Google
+            </button>
+
+            <div class="auth-links">
+                <button id="forgotPassword">Forgot Password?</button>
+            </div>
+
+            <div class="switch-auth">
+                <span id="switchText">Don't have an account?</span>
+                <button id="switchAuth">Create Account</button>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= APP ================= -->
+    <div id="appScreen" class="hidden">
+
+        <!-- NAVBAR -->
+        <header class="navbar">
+
+            <div class="brand">
+                <div class="brand-icon">QM</div>
+                <span>Quiz Master</span>
+            </div>
+
+            <div class="nav-actions">
+
+                <div class="coin-box">
+                    <span>Coins</span>
+                    <strong id="coinCount">0</strong>
+                </div>
+
+                <button id="themeBtn" class="icon-btn" title="Dark Mode">
+                    🔅
+                </button>
+
+                <button id="menuBtn" class="menu-btn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+            </div>
+
+            <!-- 3 DOT MENU -->
+            <div id="dropdownMenu" class="dropdown-menu hidden">
+
+                <button id="profileBtn">
+                    My Profile
+                </button>
+
+                <button id="scoresBtn">
+                    My Scores
+                </button>
+
+                <button id="adminBtn">
+                    Admin Panel
+                </button>
+
+                <button id="logoutBtn">
+                    Logout
+                </button>
+
+                <button id="deleteAccountBtn" class="danger">
+                    Delete Account
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- HERO -->
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <div>
+                    <p class="welcome-text">Welcome back</p>
+
+                    <h1>
+                        <span id="userName">Quiz Player</span>
+                    </h1>
+
+                    <p>
+                        Challenge yourself and learn new things
+                    </p>
+                </div>
+
+                <div class="stats">
+
+                    <div class="stat-card">
+                        <span>Streak</span>
+                        <strong id="streakCount">0</strong>
+                        <small>days</small>
+                    </div>
+
+                    <div class="stat-card">
+                        <span>Lives</span>
+                        <strong id="livesCount">5</strong>
+                    </div>
+
+                    <div class="stat-card">
+                        <span>Best Score</span>
+                        <strong id="bestScore">0</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- MAIN -->
+        <main class="main-container">
+
+            <!-- GAME MODES -->
+            <section>
+
+                <div class="section-heading">
+                    <div>
+                        <h2>Game Modes</h2>
+                        <p>Choose how you want to play.</p>
+                    </div>
+                </div>
+
+                <div class="mode-grid">
+
+                    <button class="mode-card" data-mode="classic">
+                        <div class="mode-icon">CQ</div>
+                        <h3>Classic Quiz</h3>
+                        <p>Answer questions and test your knowledge.</p>
+                    </button>
+
+                    <button class="mode-card" data-mode="speed">
+                        <div class="mode-icon">SQ</div>
+                        <h3>Speed Quiz</h3>
+                        <p>Answer as many questions as possible before time runs out.</p>
+                    </button>
+
+                    <button class="mode-card" data-mode="practice">
+                        <div class="mode-icon">PM</div>
+                        <h3>Practice Mode</h3>
+                        <p>Practice without losing lives.</p>
+                    </button>
+
+                    <button class="mode-card" data-mode="offline">
+                        <div class="mode-icon">OQ</div>
+                        <h3>Offline Quiz</h3>
+                        <p>Play quizzes using questions stored in your browser.</p>
+                    </button>
+
+                    <button class="mode-card" data-mode="battle">
+                        <div class="mode-icon">1V1</div>
+                        <h3>1v1 Battle</h3>
+                        <p>Challenge a virtual opponent.</p>
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- CATEGORIES -->
+            <section class="category-section">
+
+                <div class="section-heading">
+                    <div>
+                        <h2>Quiz Categories</h2>
+                        <p>Select a subject and start your quiz.</p>
+                    </div>
+                </div>
+
+                <div class="category-grid">
+
+                    <button class="category-card" data-category="General Knowledge">
+                        <span>GK</span>
+                        <h3>General Knowledge</h3>
+                        <p>World facts, history and general topics.</p>
+                    </button>
+
+                    <button class="category-card" data-category="General Science">
+                        <span>SC</span>
+                        <h3>General Science</h3>
+                        <p>Physics, chemistry, biology and science.</p>
+                    </button>
+
+                    <button class="category-card" data-category="Mathematics">
+                        <span>MA</span>
+                        <h3>Mathematics</h3>
+                        <p>Numbers, algebra, geometry and logic.</p>
+                    </button>
+
+                    <button class="category-card" data-category="Computer Science">
+                        <span>CS</span>
+                        <h3>Computer Science</h3>
+                        <p>Programming, computers, databases and technology.</p>
+                    </button>
+
+                    <button class="category-card" data-category="Current Affairs">
+                        <span>CA</span>
+                        <h3>Current Affairs</h3>
+                        <p>Recent events and important developments.</p>
+                    </button>
+
+                    <button class="category-card" data-category="English">
+                        <span>EN</span>
+                        <h3>English</h3>
+                        <p>Grammar, vocabulary and language skills.</p>
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- QUICK ACTIONS -->
+            <section class="quick-section">
+
+                <div class="section-heading">
+                    <div>
+                        <h2>Quick Actions</h2>
+                    </div>
+                </div>
+
+                <div class="quick-grid">
+
+                    <button id="continueQuiz">
+                        Continue Quiz
+                    </button>
+
+                    <button id="viewLeaderboard">
+                        Leaderboard
+                    </button>
+
+                    <button id="shareProfile">
+                        Share Profile
+                    </button>
+
+                </div>
+
+            </section>
+
+        </main>
+
+
+        <!-- FOOTER -->
+        <footer class="footer">
+
+            <div class="footer-container">
+
+                <div class="footer-about">
+
+                    <div class="footer-logo">
+                        Quiz Master
+                    </div>
+
+                    <p>
+                        Quiz Master is an interactive quiz platform designed
+                        to help users test their knowledge, practice different
+                        subjects, improve their scores and enjoy competitive
+                        quiz experiences.
+                    </p>
+
+                </div>
+
+
+                <div class="footer-column">
+
+                    <h3>Quiz Master</h3>
+
+                    <a href="#">Home</a>
+                    <a href="#">Categories</a>
+                    <a href="#">Game Modes</a>
+                    <a href="#">Leaderboard</a>
+
+                </div>
+
+
+                <div class="footer-column">
+
+                    <h3>Features</h3>
+
+                    <a href="#">Classic Quiz</a>
+                    <a href="#">Speed Quiz</a>
+                    <a href="#">Practice Mode</a>
+                    <a href="#">1v1 Battle</a>
+
+                </div>
+
+
+                <div class="footer-column">
+
+                    <h3>Website Details</h3>
+
+                    <p>Interactive Quiz Platform</p>
+                    <p>Knowledge & Learning</p>
+                    <p>Competitive Quizzes</p>
+                    <p>Personal Score Tracking</p>
+
+                </div>
+            </div>
+        </footer>
+    </div>
+
+
+    <!-- ================= QUIZ SCREEN ================= -->
+    <div id="quizScreen" class="quiz-screen hidden">
+
+        <div class="quiz-header">
+
+            <button id="exitQuiz">
+                Exit
+            </button>
+
+            <div class="quiz-title">
+                <span id="quizCategory">Computer Science</span>
+            </div>
+
+            <div class="quiz-score">
+                Score: <strong id="quizScore">0</strong>
+            </div>
+
+        </div>
+
+
+        <div class="quiz-container">
+
+            <div class="quiz-info">
+
+                <span id="questionNumber">
+                    Question 1 / 20
+                </span>
+
+                <span id="timer">
+                    30
+                </span>
+
+            </div>
+
+            <div class="progress">
+                <span id="progressBar"></span>
+            </div>
+
+
+            <div class="question-card">
+
+                <h2 id="questionText">
+                    Question goes here
+                </h2>
+
+                <div id="optionsContainer" class="options">
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= RESULT SCREEN ================= -->
+    <div id="resultScreen" class="result-screen hidden">
+
+        <div class="result-card">
+
+            <div class="result-icon">
+                QM
+            </div>
+
+            <h1>Quiz Completed</h1>
+
+            <p id="resultMessage">
+                Great work
+            </p>
+
+            <div class="result-score">
+
+                <span>Your Score</span>
+
+                <strong id="finalScore">
+                    0
+                </strong>
+
+                <small id="finalPercentage">
+                    0%
+                </small>
+
+            </div>
+
+            <div class="result-stats">
+
+                <div>
+                    <span>Correct</span>
+                    <strong id="correctAnswers">0</strong>
+                </div>
+
+                <div>
+                    <span>Wrong</span>
+                    <strong id="wrongAnswers">0</strong>
+                </div>
+
+                <div>
+                    <span>Coins Earned</span>
+                    <strong id="earnedCoins">0</strong>
+                </div>
+
+            </div>
+
+            <div class="result-actions">
+
+                <button id="shareResult">
+                    Share Result
+                </button>
+
+                <button id="playAgain" class="primary-btn">
+                    Play Again
+                </button>
+
+                <button id="homeBtn">
+                    Back to Home
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ================= PROFILE MODAL ================= -->
+    <div id="profileModal" class="modal hidden">
+
+        <div class="modal-card">
+
+            <button class="close-modal" data-close="profileModal">
+                X
+            </button>
+
+            <h2>My Profile</h2>
+
+            <div class="profile-info">
+
+                <div class="profile-avatar" id="profileAvatar">
+                    Q
+                </div>
+
+                <h3 id="profileName">
+                    User
+                </h3>
+
+                <p id="profileEmail">
+                    email@example.com
+                </p>
+
+            </div>
+
+            <div class="profile-stats">
+
+                <div>
+                    <span>Quizzes</span>
+                    <strong id="profileQuizzes">0</strong>
+                </div>
+
+                <div>
+                    <span>Best Score</span>
+                    <strong id="profileBest">0</strong>
+                </div>
+
+                <div>
+                    <span>Coins</span>
+                    <strong id="profileCoins">0</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ================= SCORES MODAL ================= -->
+    <div id="scoresModal" class="modal hidden">
+
+        <div class="modal-card">
+
+            <button class="close-modal" data-close="scoresModal">
+                X
+            </button>
+
+            <h2>My Scores</h2>
+
+            <div id="scoresList">
+                <p>No quiz history yet.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ================= ADMIN MODAL ================= -->
+    <div id="adminModal" class="modal hidden">
+
+        <div class="modal-card admin-card">
+
+            <button class="close-modal" data-close="adminModal">
+                X
+            </button>
+
+            <h2>Admin Panel</h2>
+
+            <p class="admin-note">
+                Manage quiz questions from this panel.
+            </p>
+
+            <div class="admin-tabs">
+
+                <button class="admin-tab active" data-admin-tab="add">
+                    Add Question
+                </button>
+
+                <button class="admin-tab" data-admin-tab="manage">
+                    Manage Questions
+                </button>
+
+                <button class="admin-tab" data-admin-tab="users">
+                    Users
+                </button>
+            </div>
+
+
+            <div id="adminAdd" class="admin-content">
+
+                <div class="input-group">
+                    <label>Category</label>
+
+                    <select id="adminCategory">
+                        <option>General Knowledge</option>
+                        <option>General Science</option>
+                        <option>Mathematics</option>
+                        <option>Computer Science</option>
+                        <option>Current Affairs</option>
+                        <option>English</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+
+                    <label>Question</label>
+
+                    <textarea
+                        id="adminQuestion"
+                        placeholder="Enter question">
+                    </textarea>
+                </div>
+
+                <div class="admin-options">
+
+                    <input id="adminOption1" placeholder="Option 1">
+                    <input id="adminOption2" placeholder="Option 2">
+                    <input id="adminOption3" placeholder="Option 3">
+                    <input id="adminOption4" placeholder="Option 4">
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>Correct Answer</label>
+
+                    <select id="adminCorrect">
+                        <option value="0">Option 1</option>
+                        <option value="1">Option 2</option>
+                        <option value="2">Option 3</option>
+                        <option value="3">Option 4</option>
+                    </select>
+
+                </div>
+
+                <button id="addQuestionBtn" class="primary-btn">
+                    Add Question
+                </button>
+
+            </div>
+
+
+            <div id="adminManage" class="admin-content hidden">
+
+                <div id="adminQuestionList">
+                    No questions available.
+                </div>
+
+            </div>
+
+
+            <div id="adminUsers" class="admin-content hidden">
+
+                <div id="adminUserList">
+                    No users found.
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- SOUND -->
+    <audio id="correctSound">
+        <source src="" type="audio/mpeg">
+    </audio>
+
+    <audio id="wrongSound">
+        <source src="" type="audio/mpeg">
+    </audio>
+
+    <!-- JavaScript File Link -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+  </body>
+</html>
